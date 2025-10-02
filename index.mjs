@@ -1,19 +1,14 @@
 import express from 'express';      
-import db from "./Config/db.mjs"
 
-db.connection.once("open", () => console.log("connected to db"))
-  .on("error", (err) => console.log("error connecting db -->", err));
+
+import cors from "cors"
+import router from "./Routes/login.mjs"
 
 
 
   const app=express()
 
-
+app.use(cors())
   app.use(express.json())
-
-   if (process.env.NODE_ENV === 'production') {
-    app.listen(5000, () => {
-        console.log(`Server is running on port ${process.env.PORT}`);
-    })
-   }
+app.use("/",router)
     export default app; 
