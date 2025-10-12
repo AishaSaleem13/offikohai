@@ -4,7 +4,7 @@ import upload from "../Middleware/upload.mjs"
 
 const router=express.Router()
 
-router.get("/",Studioget)
+router.get("/get",Studioget)
 router.post("/post",upload.array("images"),studiopost)
 router.get("/Studio/:id",Studioid)
 export default router
