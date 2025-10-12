@@ -11,10 +11,13 @@ export const Studioget= async(req,res)=>{
         console.log(getStudio)
   res.status(200).json({message:"getting studio products",Data:getStudio})
 
-    } catch (error) {
-        console.log(error)
-        res.status(500).json({message:"error in getting studio products "})
-    }
+    } 
+       catch (error) {
+  console.log("GET studio error:", error);
+  res.status(500).json({ message: "error in getting studio products" });
+}
+
+    
 }
 
 
