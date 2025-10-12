@@ -1,8 +1,10 @@
 import express from "express";
+
+
+import studio from "../Routes/Studio.mjs"
+
  const router=express.Router()
-import login from "../Routes/login.mjs"
 
-
-router.use("/login",login)
+router.use("/studio",studio)
 
 export default router 
