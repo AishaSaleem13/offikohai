@@ -8,7 +8,8 @@ export const Studioget= async(req,res)=>{
     try {
         const getStudio= await Studio.find({},{PersonCapacity:1,images:1,title:1 })
         console.log(getStudio)
-        res.status(201).json({message:"getting studio products",Data:getStudio})
+  res.status(200).json({message:"getting studio products",Data:getStudio})
+
     } catch (error) {
         console.log(error)
         res.status(500).json({message:"error in getting studio products "})

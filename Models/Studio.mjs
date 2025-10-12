@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 import { Schema } from "mongoose";
- const StudioSchma = Schema({
+ const StudioSchma = new Schema({
 title:{
     type:String,
     required:true
