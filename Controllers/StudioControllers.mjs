@@ -6,7 +6,7 @@ import Studio from "../Models/Studio.mjs";
 export const Studioget= async(req,res)=>{
 
     try {
-        const getStudio= await Studio.find({},{PersonCapacity:1,images:1,title:1 })
+        const getStudio= await Studio.find()
         console.log(getStudio)
   res.status(200).json({message:"getting studio products",Data:getStudio})
 
