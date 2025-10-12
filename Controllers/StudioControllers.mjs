@@ -1,3 +1,4 @@
+import { uploadToCloudinary } from "../Middleware/upload.mjs";
 import Studio from "../Models/Studio.mjs";
 
 
@@ -24,10 +25,17 @@ export const Studioget= async(req,res)=>{
     try {
         console.log("text data",req.body)
             console.log("file",req.files)
+            
+let imageUrls = [];
 
-if (!req.files) {
-    return res.json({message:"image is required "})
+if (req.files && req.files.length > 0) {
+  for (const file of req.files) {
+    const uploaded = await uploadToCloudinary(file.buffer, "studio");
+    imageUrls.push(uploaded.secure_url);
+  }
 }
+
+
 
         const {title,price,PersonCapacity,slots,description}=req.body
 
@@ -36,13 +44,14 @@ if (!req.files) {
 
 const parsedSlots = JSON.parse(req.body.slots);
 
+
     const postStudio = new Studio({
         title,
         price,
         PersonCapacity,
         slots:parsedSlots,
         description,
-        images:req.files.map((files)=>files.path)
+        images:imageUrls
     },
     )
         await postStudio.save()
