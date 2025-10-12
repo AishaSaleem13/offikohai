@@ -42,7 +42,7 @@ if (req.files && req.files.length > 0) {
         if (!price||!title||!PersonCapacity||!slots||!description) {
     return res.json({message:"all fields required"})}
 
-const parsedSlots = JSON.parse(req.body.slots);
+const parsedSlots = JSON.parse(req.body.slots.trim());
 
 
     const postStudio = new Studio({
@@ -57,10 +57,13 @@ const parsedSlots = JSON.parse(req.body.slots);
         await postStudio.save()
 res.status(201).json({message:" studio post completed "})
 }
-    catch (error) {
-        res.status(500).json({message:"error in posting product"})
-    }
+
+   catch (error) {
+    console.error("Error in posting studio:", error);
+    res.status(500).json({ message: "error in posting product", error: error.message });
 }
+    }
+
  
 
 
