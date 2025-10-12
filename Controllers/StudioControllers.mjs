@@ -7,8 +7,10 @@ import Studio from "../Models/Studio.mjs";
 export const Studioget= async(req,res)=>{
 
     try {
+            console.log("GET / studios called");
         const getStudio= await Studio.find({},{PersonCapacity:1,images:1,title:1 })
-        console.log(getStudio)
+            console.log("Studios fetched:", getStudio.length);
+
   res.status(200).json({message:"getting studio products",Data:getStudio})
 
     } 
