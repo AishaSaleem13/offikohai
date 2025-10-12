@@ -1,38 +1,21 @@
+import express from "express";
+import router from "./Routes/Studio.mjs";
+import { connectDB } from "./Config/db.mjs";
 
-import db from "./Config/db.mjs"
+const app = express();
 
+app.use(express.json());
+app.use("/", router);
 
-
-import express from 'express';      
-
-
-import cors from "cors"
-import router from "./Routes/Studio.mjs"
-
-
-
-  const app=express()
-
-app.use(cors())
-  app.use(express.json())
-  app.get("/", (req, res) => {
-  res.send("🚀 API is running on Vercel product post without img");
-  
-});
-app.use("/",router)
-
-
-
-db.connection.once("open", () => console.log("connected to db"))
-  .on("error", (err) => console.log("error connecting db -->", err));
 const PORT = process.env.PORT || 3000;
 
-if (process.env.NODE_ENV !== "production") {
-  // Only start server locally
-  const PORT = process.env.PORT || 3000;
-  app.listen(PORT, () => {
-    console.log(`✅ Server is running on port ${PORT}`);
-  });}
-
-
-  export default app 
+// Connect DB before starting server
+connectDB()
+  .then(() => {
+    app.listen(PORT, () => {
+      console.log(`✅ Server running on port ${PORT}`);
+    });
+  })
+  .catch((err) => {
+    console.error("❌ DB connection failed:", err);
+  });

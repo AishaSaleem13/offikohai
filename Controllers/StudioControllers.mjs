@@ -3,18 +3,19 @@ import Studio from "../Models/Studio.mjs";
 
 // get api 
 
-export const Studioget= async(req,res)=>{
+import { connectDB } from "../Config/db.mjs";
 
-    try {
-        const getStudio= await Studio.find()
-        console.log(getStudio)
-  res.status(200).json({message:"getting studio products",Data:getStudio})
+export const Studioget = async (req, res) => {
+  try {
+    await connectDB(); // ensure connection
+    const getStudio = await Studio.find();
+    res.status(200).json({ message: "getting studio products", Data: getStudio });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "error in getting studio products" });
+  }
+};
 
-    } catch (error) {
-        console.log(error)
-        res.status(500).json({message:"error in getting studio products "})
-    }
-}
 
 
 // postapi 

@@ -1,6 +1,11 @@
-import mongoose from 'mongoose';
-import { MongoURL } from './environment.mjs';
+import mongoose from "mongoose";
 
-mongoose.connect(MongoURL)
-
-export default mongoose;
+export const connectDB = async () => {
+  try {
+    await mongoose.connect(process.env.MONGO_URI);
+    console.log("✅ Connected to DB");
+  } catch (err) {
+    console.error("❌ DB connection failed:", err);
+    throw err;
+  }
+};
