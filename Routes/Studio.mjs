@@ -1,5 +1,6 @@
 import express from "express"
 import upload from "../Middleware/upload.mjs"
+import mongoose from "mongoose"
 
 import Studio from "../Models/Studio.mjs"
 const router=express.Router()
@@ -49,15 +50,23 @@ res.status(201).json({message:" studio post completed "})
     }
 })
 
-router.get("/:id", async (req,res) => {
-    try {
-        const idStudio= await Studio.findById(req.params.id)
-        console.log(idStudio)
-        res.status(200).json({message:"getting id of product",data:idStudio})
-    } catch (error) {
-        res.status(500).json({message:"erorr in getting id "})
+router.get("/:id", async (req, res) => {
+  const { id } = req.params;
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    return res.status(400).json({ message: "Invalid studio ID" });
+  }
+
+  try {
+    const idStudio = await Studio.findById(id);
+    if (!idStudio) {
+      return res.status(404).json({ message: "Studio not found" });
     }
-})
+    res.status(200).json({ message: "getting id of product", data: idStudio });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "error in getting id" });
+  }
+});
 // delete api
 
 router.delete("/:id", async (req, res) => {
