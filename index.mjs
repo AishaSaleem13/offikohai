@@ -14,7 +14,13 @@ app.use(cors())
 app.use(express.json())
 app.get("/", (req, res) => {
   res.send("🚀 API is running on Vercel product post without img");
-  
+  ``
 });
 app.use("/",router)
+if (process.env.NODE_ENV !== "production") {
+  app.listen(5000, () => {
+    console.log("server is running port 5000");
+  });
+}
+
 export default app;
